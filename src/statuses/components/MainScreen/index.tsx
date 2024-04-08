@@ -1,5 +1,4 @@
-import { FC, useCallback } from "react";
-import {useSelector} from "react-redux";
+import {FC, useCallback, useEffect, useState} from "react";
 import { statusesStore } from '../../store';
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -24,11 +23,7 @@ const rows = [
 
 const MainScreen: FC = (): JSX.Element => {
 
-    // We don't need this code any more, replacing it with selector from store
-
-    // const [ loadingIds, setLoadingIds ] = useState<{ [key: string]: boolean }>({});
-
-    const loadingIds = useSelector(statusesStore.selectors.selectStatusesLoadingIds);
+    const [ loadingIds, setLoadingIds ] = useState<{ [key: string]: boolean }>({});
 
     const [
         changeStatus,
@@ -36,34 +31,30 @@ const MainScreen: FC = (): JSX.Element => {
     ] = statusesStore.api.useLazyChangeStatusQuery();
 
     const handleChangeStatus = useCallback((entryId: string) => {
-        // This piece of code is redundant as well
-
-        // setLoadingIds(prevState => {
-        //     return {
-        //         ...prevState,
-        //         [entryId]: true
-        //     }
-        // });
+        setLoadingIds(prevState => {
+            return {
+                ...prevState,
+                [entryId]: true
+            }
+        });
 
         changeStatus({ entryId });
     }, [changeStatus]);
 
-    // And we can completelly get rid from useEffect here itself
-
-    // useEffect(() => {
-    //     const {isError, isSuccess, originalArgs, isFetching} = changeStatusResult;
-    //     if (isFetching) {
-    //         return;
-    //     }
-    //     if ((isSuccess || isError) && originalArgs) {
-    //         setLoadingIds(prevState => {
-    //             return {
-    //                 ...prevState,
-    //                 [originalArgs?.entryId]: false
-    //             }
-    //         });
-    //     }
-    // }, [changeStatusResult]);
+    useEffect(() => {
+        const {isError, isSuccess, originalArgs, isFetching} = changeStatusResult;
+        if (isFetching) {
+            return;
+        }
+        if ((isSuccess || isError) && originalArgs) {
+            setLoadingIds(prevState => {
+                return {
+                    ...prevState,
+                    [originalArgs?.entryId]: false
+                }
+            });
+        }
+    }, [changeStatusResult]);
 
   return (
     <>

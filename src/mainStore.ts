@@ -11,7 +11,7 @@ export const mainStore = configureStore({
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
         .concat(mainApi.middleware)
-        .filter(Boolean), // Remove conditionally concatted middlewares (e.x. Redux Logger only defined for dev builds),
+        .filter(Boolean),
 });
 
 export type RootState = ReturnType<typeof mainStore.getState>;
