@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const mainApi = createApi({
   reducerPath: 'mainApi',
   baseQuery: fetchBaseQuery({
-    // Fake mock AP just for example
+    // Fake mock API just for example
     baseUrl: 'https://jsonplaceholder.typicode.com/'
   }),
   endpoints: () => ({}),

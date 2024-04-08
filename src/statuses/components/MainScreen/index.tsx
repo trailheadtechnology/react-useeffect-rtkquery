@@ -24,7 +24,7 @@ const rows = [
 
 const MainScreen: FC = (): JSX.Element => {
 
-    // We don't need this code any more, replacing it with selector from store
+    // We don't need this code anymore, replacing it with selector from store
 
     // const [ loadingIds, setLoadingIds ] = useState<{ [key: string]: boolean }>({});
 
@@ -48,7 +48,7 @@ const MainScreen: FC = (): JSX.Element => {
         changeStatus({ entryId });
     }, [changeStatus]);
 
-    // And we can completelly get rid from useEffect here itself
+    // And we can completely get rid of useEffect here itself
 
     // useEffect(() => {
     //     const {isError, isSuccess, originalArgs, isFetching} = changeStatusResult;
